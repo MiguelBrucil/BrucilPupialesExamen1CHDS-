@@ -8,6 +8,9 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -19,7 +22,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class MainActivity extends AppCompatActivity {
+public class BibliografiaActivity extends AppCompatActivity {
     Button btnRequest;
     TextView txtVista, txtVista2;
 
@@ -27,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_bibliografia);
         btnRequest = findViewById(R.id.btnCli);
         txtVista = findViewById(R.id.txt_Cli);
         txtVista2 = findViewById(R.id.textView4);
@@ -35,35 +38,18 @@ public class MainActivity extends AppCompatActivity {
         btnRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                obtenerServicioWeb("http://10.10.24.39:3002/nombre");
+                obtenerServicioWeb("http://10.10.24.39:3002/Miguel");
             }
         });
     }
 
     private void obtenerServicioWeb(String URL) {
-        StringRequest stringRequest = new StringRequest(
-                Request.Method.GET,
-                URL,
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL,
+
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        try {
-                            JSONArray jsonArray = new JSONArray(response);
-                            StringBuilder resultado = new StringBuilder();
-
-                            for (int i = 0; i < jsonArray.length(); i++) {
-                                JSONObject objeto = jsonArray.getJSONObject(i);
-                                String id = objeto.getString("id");
-                                String nombre = objeto.getString("nombre");
-                                resultado.append("ID: ").append(id).append(", Nombre: ").append(nombre).append("\n");
-
-                            }
-
-                            txtVista.setText(resultado.toString());
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                            Toast.makeText(getApplicationContext(), "Error al procesar los datos", Toast.LENGTH_SHORT).show();
-                        }
+                        txtVista.setText(response);
                     }
                 },
                 new Response.ErrorListener() {
@@ -72,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Error: " + error.toString(), Toast.LENGTH_SHORT).show();
                     }
                 });
+
 
         Volley.newRequestQueue(this).add(stringRequest);
     }

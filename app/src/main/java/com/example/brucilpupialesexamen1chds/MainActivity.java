@@ -8,24 +8,21 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import java.util.HashMap;
-import java.util.Map;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
-    private Button btnRequest;
-    private TextView txtVista, txtVista2;
+    Button btnRequest;
+    TextView txtVista, txtVista2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,18 +35,35 @@ public class MainActivity extends AppCompatActivity {
         btnRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                obtenerServicioWeb("http://192.168.137.1:3001");
+                obtenerServicioWeb("http://192.168.137.1:3002/nombre");
             }
         });
     }
 
     private void obtenerServicioWeb(String URL) {
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, URL,
+        StringRequest stringRequest = new StringRequest(
+                Request.Method.GET,
+                URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        txtVista.setText(response);
+                        try {
+                            JSONArray jsonArray = new JSONArray(response);
+                            StringBuilder resultado = new StringBuilder();
+
+                            for (int i = 0; i < jsonArray.length(); i++) {
+                                JSONObject objeto = jsonArray.getJSONObject(i);
+                                String id = objeto.getString("id");
+                                String nombre = objeto.getString("nombre");
+                                resultado.append("ID: ").append(id).append(", Nombre: ").append(nombre).append("\n");
+
+                            }
+
+                            txtVista.setText(resultado.toString());
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(getApplicationContext(), "Error al procesar los datos", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 },
                 new Response.ErrorListener() {
@@ -57,17 +71,8 @@ public class MainActivity extends AppCompatActivity {
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText(getApplicationContext(), "Error: " + error.toString(), Toast.LENGTH_SHORT).show();
                     }
-                }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("clave", "valor");
-                return params;
-            }
-        };
+                });
 
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(stringRequest);
-
+        Volley.newRequestQueue(this).add(stringRequest);
     }
 }

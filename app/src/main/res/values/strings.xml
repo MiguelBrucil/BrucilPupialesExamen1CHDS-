@@ -1,8 +1,4 @@
 <resources>
     <string name="app_name">BrucilPupialesExamen1CHDS</string>
-    <string-array name="figuras_array">
-        <item>Cuadrado</item>
-        <item>Triangulo</item>
-        <item>Heptagono</item>
-    </string-array>
+
 </resources>

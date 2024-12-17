@@ -16,7 +16,7 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".FigurasActivity"
+            android:name=".CuadradoActivity"
             android:exported="false" />
         <activity
             android:name=".SumaActivity"

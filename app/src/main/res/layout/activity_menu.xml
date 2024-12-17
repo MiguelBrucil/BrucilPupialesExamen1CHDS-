@@ -35,20 +35,20 @@
 
     <Button
         android:id="@+id/btnLista"
-        android:layout_width="121dp"
-        android:layout_height="70dp"
+        android:layout_width="147dp"
+        android:layout_height="65dp"
         android:text="LISTA"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.855"
+        app:layout_constraintHorizontal_bias="0.901"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.217" />
+        app:layout_constraintVertical_bias="0.216" />
 
     <Button
         android:id="@+id/btnSuma"
-        android:layout_width="114dp"
-        android:layout_height="72dp"
+        android:layout_width="145dp"
+        android:layout_height="62dp"
         android:text="SUMA INGRESO"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -59,7 +59,7 @@
 
     <Button
         android:id="@+id/btnSuma3"
-        android:layout_width="138dp"
+        android:layout_width="149dp"
         android:layout_height="69dp"
         android:text="Suma "
         app:layout_constraintBottom_toBottomOf="parent"
@@ -71,13 +71,13 @@
 
     <Button
         android:id="@+id/btnFiguras"
-        android:layout_width="148dp"
-        android:layout_height="59dp"
-        android:text="Figuras"
+        android:layout_width="146dp"
+        android:layout_height="66dp"
+        android:text="Cuadrado"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.543"
+        app:layout_constraintHorizontal_bias="0.192"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.575" />
+        app:layout_constraintVertical_bias="0.536" />
 </androidx.constraintlayout.widget.ConstraintLayout>

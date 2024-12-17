@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,59 +19,57 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-
-public class FigurasActivity extends AppCompatActivity {
-    Spinner spnFigura;
-    EditText etParametro1;
-    Button btnCalcular;
-    TextView tvResultado;
+public class CuadradoActivity extends AppCompatActivity {
+    Button btnRequest;
+    TextView txtVista, txtVista2;
+    EditText etIngreso;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_figuras);
-        spnFigura = findViewById(R.id.spnFigura);
-        etParametro1 = findViewById(R.id.etParametro1);
-        btnCalcular = findViewById(R.id.btnCalcular);
-        tvResultado = findViewById(R.id.tvResultado);
-        btnCalcular.setOnClickListener(new View.OnClickListener() {
+        setContentView(R.layout.activity_cuadrado);
+        btnRequest = findViewById(R.id.btnCli);
+        txtVista = findViewById(R.id.txt_Cli);
+        txtVista2 = findViewById(R.id.textView4);
+        etIngreso = findViewById(R.id.tvtingreso);
+        btnRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String figura = spnFigura.getSelectedItem().toString().toLowerCase();
-                String n1 = etParametro1.getText().toString();
-                if (!n1.isEmpty()) {
-                    // Crear la URL para el servicio web con los parámetros adecuados
-                    String url = "http://192.168.10.114:3002/perimetro/" + figura + "/" + n1;
-                    obtenerServicioWeb(url);
+                String input = etIngreso.getText().toString().trim(); // Obtener el valor del EditText
+
+                // Validación del input
+                if (input.isEmpty()) {
+                    Toast.makeText(CuadradoActivity.this, "Por favor, ingrese un número", Toast.LENGTH_SHORT).show();
                 } else {
-                    tvResultado.setText("Por favor ingrese el valor del lado.");
+                    // Construir la URL usando el número ingresado
+                    String url = "http://192.168.10.106:3002/cuadrado/" + input;
+
+                    // Llamada al método para obtener el servicio web
+                    obtenerServicioWeb(url);
                 }
             }
         });
     }
 
     private void obtenerServicioWeb(String URL) {
+        // Creación de la petición GET
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        // Mostrar la respuesta del servidor (que es el cálculo)
-                        tvResultado.setText("Resultado:\n" + response);
+                        // Mostrar la respuesta en el TextView
+                        txtVista.setText(response);
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        // Mostrar un mensaje de error si la solicitud falla
                         Toast.makeText(getApplicationContext(), "Error: " + error.toString(), Toast.LENGTH_SHORT).show();
                     }
                 });
 
-        // Agregar la solicitud a la cola de Volley
+        // Agregar la petición a la cola de Volley
         Volley.newRequestQueue(this).add(stringRequest);
     }
+
 }

@@ -38,7 +38,7 @@ public class BibliografiaActivity extends AppCompatActivity {
         btnRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                obtenerServicioWeb("http://10.10.24.39:3002/Miguel");
+                obtenerServicioWeb("http://192.168.10.114:3002/Miguel");
             }
         });
     }

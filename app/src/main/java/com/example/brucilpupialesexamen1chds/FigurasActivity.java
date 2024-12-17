@@ -3,6 +3,8 @@ package com.example.brucilpupialesexamen1chds;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,43 +20,59 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-public class SumaActivity extends AppCompatActivity {
-    Button btnRequest;
-    TextView txtVista, txtVista2;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
+public class FigurasActivity extends AppCompatActivity {
+    Spinner spnFigura;
+    EditText etParametro1;
+    Button btnCalcular;
+    TextView tvResultado;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_suma);
-        btnRequest = findViewById(R.id.btnCli);
-        txtVista = findViewById(R.id.txt_Cli);
-        txtVista2 = findViewById(R.id.textView4);
-
-        btnRequest.setOnClickListener(new View.OnClickListener() {
+        setContentView(R.layout.activity_figuras);
+        spnFigura = findViewById(R.id.spnFigura);
+        etParametro1 = findViewById(R.id.etParametro1);
+        btnCalcular = findViewById(R.id.btnCalcular);
+        tvResultado = findViewById(R.id.tvResultado);
+        btnCalcular.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                obtenerServicioWeb("http://192.168.10.114:3002/suma");
+                String figura = spnFigura.getSelectedItem().toString().toLowerCase();
+                String n1 = etParametro1.getText().toString();
+                if (!n1.isEmpty()) {
+                    // Crear la URL para el servicio web con los parámetros adecuados
+                    String url = "http://192.168.10.114:3002/perimetro/" + figura + "/" + n1;
+                    obtenerServicioWeb(url);
+                } else {
+                    tvResultado.setText("Por favor ingrese el valor del lado.");
+                }
             }
         });
     }
 
     private void obtenerServicioWeb(String URL) {
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL,
-
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        txtVista.setText(response);
+                        // Mostrar la respuesta del servidor (que es el cálculo)
+                        tvResultado.setText("Resultado:\n" + response);
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        // Mostrar un mensaje de error si la solicitud falla
                         Toast.makeText(getApplicationContext(), "Error: " + error.toString(), Toast.LENGTH_SHORT).show();
                     }
                 });
 
-
+        // Agregar la solicitud a la cola de Volley
         Volley.newRequestQueue(this).add(stringRequest);
     }
 }

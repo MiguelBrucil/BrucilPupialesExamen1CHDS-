@@ -20,45 +20,48 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-public class CuadradoActivity extends AppCompatActivity {
-    Button btnRequest,btnregresar;
+public class HexagonoActivity extends AppCompatActivity {
+    Button btnRequest, btnregresar;
     TextView txtVista, txtVista2;
-    EditText etIngreso;
+    EditText etIngreso, etApotema;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_cuadrado);
+        setContentView(R.layout.activity_hexagono);
         btnRequest = findViewById(R.id.btnCli);
-        btnregresar=findViewById(R.id.btnVolver);
+        btnregresar = findViewById(R.id.btnVolver);
         txtVista = findViewById(R.id.txt_Cli);
         txtVista2 = findViewById(R.id.textView4);
         etIngreso = findViewById(R.id.tvtingreso);
+        etApotema = findViewById(R.id.txtApotema);
         btnRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String input = etIngreso.getText().toString().trim(); // Obtener el valor del EditText
+                String lado = etIngreso.getText().toString().trim(); // Obtener el valor del lado
+                String apotema = etApotema.getText().toString().trim(); // Obtener el valor del apotema
 
                 // Validación del input
-                if (input.isEmpty()) {
-                    Toast.makeText(CuadradoActivity.this, "Por favor, ingrese un número", Toast.LENGTH_SHORT).show();
+                if (lado.isEmpty() || apotema.isEmpty()) {
+                    Toast.makeText(HexagonoActivity.this, "Por favor, ingrese los dos valores (lado y apotema)", Toast.LENGTH_SHORT).show();
                 } else {
-                    // Construir la URL usando el número ingresado
-                    String url = "http://192.168.10.106:3002/cuadrado/" + input;
+                    // Construir la URL usando los valores de lado y apotema
+                    String url = "http://192.168.10.106:3002/hexagono/" + lado + "/" + apotema;
 
                     // Llamada al método para obtener el servicio web
                     obtenerServicioWeb(url);
                 }
             }
         });
+
         btnregresar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(CuadradoActivity.this, MenuActivity.class);
+                Intent intent = new Intent(HexagonoActivity.this, MenuActivity.class);
                 startActivity(intent);
             }
         });
-
     }
 
     private void obtenerServicioWeb(String URL) {
@@ -81,6 +84,4 @@ public class CuadradoActivity extends AppCompatActivity {
         // Agregar la petición a la cola de Volley
         Volley.newRequestQueue(this).add(stringRequest);
     }
-
-
 }

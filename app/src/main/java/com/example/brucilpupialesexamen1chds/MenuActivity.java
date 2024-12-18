@@ -7,12 +7,9 @@ import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 public class MenuActivity extends AppCompatActivity {
-    Button btnDatos, btnLista, btnSuma, btnSuma3, btnFiguras;
+    Button btnDatos, btnLista, btnSuma, btnSuma3, btnFiguras,btnHexa;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -22,7 +19,8 @@ public class MenuActivity extends AppCompatActivity {
         btnLista = findViewById(R.id.btnLista);
         btnSuma = findViewById(R.id.btnSuma);
         btnSuma3 = findViewById(R.id.btnSuma3);
-        btnFiguras = findViewById(R.id.btnFiguras);
+        btnFiguras = findViewById(R.id.btnCuadrado);
+        btnHexa = findViewById(R.id.btnHexagono);
         btnDatos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,6 +57,13 @@ public class MenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MenuActivity.this, CuadradoActivity.class);
+                startActivity(intent);
+            }
+        });
+        btnHexa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MenuActivity.this, HexagonoActivity.class);
                 startActivity(intent);
             }
         });

@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         btnRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                obtenerServicioWeb("http://192.168.10.114:3002/nombre");
+                obtenerServicioWeb("http://192.168.137.145:3002/nombre");
             }
         });
     }

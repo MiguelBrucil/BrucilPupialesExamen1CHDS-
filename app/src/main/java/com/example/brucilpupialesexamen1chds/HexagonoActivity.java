@@ -39,17 +39,17 @@ public class HexagonoActivity extends AppCompatActivity {
         btnRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String lado = etIngreso.getText().toString().trim(); // Obtener el valor del lado
-                String apotema = etApotema.getText().toString().trim(); // Obtener el valor del apotema
+                String lado = etIngreso.getText().toString().trim();
+                String apotema = etApotema.getText().toString().trim();
 
-                // Validación del input
+
                 if (lado.isEmpty() || apotema.isEmpty()) {
                     Toast.makeText(HexagonoActivity.this, "Por favor, ingrese los dos valores (lado y apotema)", Toast.LENGTH_SHORT).show();
                 } else {
-                    // Construir la URL usando los valores de lado y apotema
-                    String url = "http://192.168.10.106:3002/hexagono/" + lado + "/" + apotema;
 
-                    // Llamada al método para obtener el servicio web
+                    String url = "http://192.168.137.145:3002/hexagono/" + lado + "/" + apotema;
+
+
                     obtenerServicioWeb(url);
                 }
             }
@@ -65,12 +65,12 @@ public class HexagonoActivity extends AppCompatActivity {
     }
 
     private void obtenerServicioWeb(String URL) {
-        // Creación de la petición GET
+
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        // Mostrar la respuesta en el TextView
+
                         txtVista.setText(response);
                     }
                 },
@@ -81,7 +81,6 @@ public class HexagonoActivity extends AppCompatActivity {
                     }
                 });
 
-        // Agregar la petición a la cola de Volley
         Volley.newRequestQueue(this).add(stringRequest);
     }
 }

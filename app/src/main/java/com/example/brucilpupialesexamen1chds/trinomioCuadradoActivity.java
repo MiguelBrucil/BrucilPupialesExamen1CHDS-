@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,44 +20,55 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-public class BibliografiaActivity extends AppCompatActivity {
+public class trinomioCuadradoActivity extends AppCompatActivity {
     Button btnRequest, btnregresar;
     TextView txtVista, txtVista2;
-
+    EditText etIngresoA, etIngresoB,etIngresoC;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_bibliografia);
+        setContentView(R.layout.activity_trinomio_cuadrado);
         btnRequest = findViewById(R.id.btnCli);
+        btnregresar = findViewById(R.id.btnVolver);
         txtVista = findViewById(R.id.txt_Cli);
         txtVista2 = findViewById(R.id.textView4);
-        btnregresar=findViewById(R.id.btnVolver);
+        etIngresoA = findViewById(R.id.txtIngresoA);
+        etIngresoB = findViewById(R.id.txtIngresoB);
+        etIngresoC = findViewById(R.id.txtIngresoC);
         btnRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                obtenerServicioWeb("http://192.168.137.145:3002/Miguel");
+                String A = etIngresoA.getText().toString().trim();
+                String B = etIngresoB.getText().toString().trim();
+                String C = etIngresoC.getText().toString().trim();
+                if (A.isEmpty() || B.isEmpty()|| C.isEmpty()) {
+                    Toast.makeText(trinomioCuadradoActivity.this, "Por favor, ingrese los dos valores (lado y apotema)", Toast.LENGTH_SHORT).show();
+                } else {
+                    String url = "http://10.10.24.39:3002/trinomio/" + A + "/" + B + "/"+C;
+
+
+                    obtenerServicioWeb(url);
+                }
             }
         });
+
         btnregresar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(BibliografiaActivity.this, MenuActivity.class);
+                Intent intent = new Intent(trinomioCuadradoActivity.this, MenuActivity.class);
                 startActivity(intent);
             }
         });
     }
 
     private void obtenerServicioWeb(String URL) {
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL,
 
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+
                         txtVista.setText(response);
                     }
                 },
@@ -70,4 +82,6 @@ public class BibliografiaActivity extends AppCompatActivity {
 
         Volley.newRequestQueue(this).add(stringRequest);
     }
+
+
 }

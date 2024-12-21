@@ -36,16 +36,16 @@ public class SumaConstanteActivity extends AppCompatActivity {
         btnRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String input = etIngreso.getText().toString().trim(); // Obtener el valor del EditText
+                String input = etIngreso.getText().toString().trim();
 
-                // Validación del input
+
                 if (input.isEmpty()) {
                     Toast.makeText(SumaConstanteActivity.this, "Por favor, ingrese un número", Toast.LENGTH_SHORT).show();
                 } else {
-                    // Construir la URL usando el número ingresado
-                    String url = "http://192.168.10.114:3002/sumar/" + input;
 
-                    // Llamada al método para obtener el servicio web
+                    String url = "http://192.168.137.145:3002/sumar/" + input;
+
+
                     obtenerServicioWeb(url);
                 }
             }
@@ -53,12 +53,12 @@ public class SumaConstanteActivity extends AppCompatActivity {
     }
 
     private void obtenerServicioWeb(String URL) {
-        // Creación de la petición GET
+
         StringRequest stringRequest = new StringRequest(Request.Method.GET, URL,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        // Mostrar la respuesta en el TextView
+
                         txtVista.setText(response);
                     }
                 },
@@ -69,7 +69,7 @@ public class SumaConstanteActivity extends AppCompatActivity {
                     }
                 });
 
-        // Agregar la petición a la cola de Volley
+
         Volley.newRequestQueue(this).add(stringRequest);
     }
 }

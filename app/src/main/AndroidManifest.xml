@@ -16,6 +16,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".TrinomioNegativoActivity"
+            android:exported="false" />
+        <activity
             android:name=".trinomioCuadradoActivity"
             android:exported="false" />
         <activity

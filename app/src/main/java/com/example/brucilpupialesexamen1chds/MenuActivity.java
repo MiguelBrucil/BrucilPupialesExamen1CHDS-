@@ -9,7 +9,7 @@ import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MenuActivity extends AppCompatActivity {
-    Button btnDatos, btnLista, btnSuma, btnSuma3, btnFiguras,btnHexa, btnPen,tbnTrino;
+    Button btnDatos, btnLista, btnSuma, btnSuma3, btnFiguras,btnHexa, btnPen,tbnTrino,tbnTrinoN;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,7 +23,7 @@ public class MenuActivity extends AppCompatActivity {
         btnHexa = findViewById(R.id.btnHexagono);
         btnPen = findViewById(R.id.btnPentagono);
         tbnTrino = findViewById(R.id.btnTrinomio);
-
+        tbnTrinoN=findViewById(R.id.btnTri);
         btnDatos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,6 +82,13 @@ public class MenuActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MenuActivity.this, trinomioCuadradoActivity.class);
+                startActivity(intent);
+            }
+        });
+        tbnTrinoN.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MenuActivity.this, TrinomioNegativoActivity.class);
                 startActivity(intent);
             }
         });

@@ -20,7 +20,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-public class trinomioCuadradoActivity extends AppCompatActivity {
+public class TrinomioNegativoActivity extends AppCompatActivity {
     Button btnRequest, btnregresar;
     TextView txtVista, txtVista2;
     EditText etIngresoA, etIngresoB,etIngresoC;
@@ -28,7 +28,7 @@ public class trinomioCuadradoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_trinomio_cuadrado);
+        setContentView(R.layout.activity_trinomio_negativo);
         btnRequest = findViewById(R.id.btnCli);
         btnregresar = findViewById(R.id.btnVolver);
         txtVista = findViewById(R.id.txt_Cli);
@@ -43,9 +43,9 @@ public class trinomioCuadradoActivity extends AppCompatActivity {
                 String B = etIngresoB.getText().toString().trim();
                 String C = etIngresoC.getText().toString().trim();
                 if (A.isEmpty() || B.isEmpty()|| C.isEmpty()) {
-                    Toast.makeText(trinomioCuadradoActivity.this, "Por favor, ingrese los dos valores (lado y apotema)", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(TrinomioNegativoActivity.this, "Por favor, ingrese los dos valores (lado y apotema)", Toast.LENGTH_SHORT).show();
                 } else {
-                    String url = "http://192.168.10.110:3002/trinomio/" + A + "/" + B + "/"+C;
+                    String url = "http://192.168.10.110:3002/trinomioN/" + A + "/" + B + "/"+C;
 
 
                     obtenerServicioWeb(url);
@@ -56,7 +56,7 @@ public class trinomioCuadradoActivity extends AppCompatActivity {
         btnregresar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(trinomioCuadradoActivity.this, MenuActivity.class);
+                Intent intent = new Intent(TrinomioNegativoActivity.this, MenuActivity.class);
                 startActivity(intent);
             }
         });
@@ -82,6 +82,5 @@ public class trinomioCuadradoActivity extends AppCompatActivity {
 
         Volley.newRequestQueue(this).add(stringRequest);
     }
-
 
 }
